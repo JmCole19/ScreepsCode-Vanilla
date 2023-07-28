@@ -8,7 +8,7 @@ var roleHauler = {
         });
 
         // If the spawn needs energy and there are containers available
-        if (spawn.store.getFreeCapacity(RESOURCE_ENERGY) > 0 && containers.length > 0) {
+        if (spawn.store.getFreeCapacity(RESOURCE_ENERGY) > 0 && containers.length > 0 && !spawn.spawning) {
             this.loadSpawner(creep, spawn, containers[0]);
         } else {
             this.haulResources(creep);
@@ -48,6 +48,7 @@ var roleHauler = {
     },
 
     loadSpawner: function(creep, spawn, container) {
+    if (container.store[RESOURCE_ENERGY] > 1000) { // Check if the container has more than 1000 energy
         if (creep.store.getFreeCapacity() > 0) {
             if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(container);
@@ -57,7 +58,11 @@ var roleHauler = {
                 creep.moveTo(spawn);
             }
         }
+    } else {
+        // Find other sources of energy, like dropped resources or containers with more than 1000 energy
+        this.haulResources(creep);
     }
+}
 };
 
 module.exports = roleHauler;

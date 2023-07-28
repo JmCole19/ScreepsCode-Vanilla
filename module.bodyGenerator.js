@@ -13,6 +13,10 @@ const bodyGenerator = {
                 return [WORK, CARRY, MOVE];
             case 'hauler':
                 return [CARRY, CARRY, MOVE, MOVE];
+            case 'ranger':
+                return [RANGED_ATTACK, RANGED_ATTACK, MOVE, TOUGH];
+            case 'healer':
+                return [HEAL, HEAL, MOVE, MOVE, TOUGH, TOUGH];
             // Add other roles and their corresponding body parts here, if needed
             default:
                 return [];
